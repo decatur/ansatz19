@@ -4,8 +4,13 @@ classdef QtyEvaluator < Evaluator
 
 
 methods (Access = public)
-
+    
+    function this = QtyEvaluator(ast)
+        this = this@Evaluator(ast);
+    end
+    
     function value = qty(this, node)
+        keyboard
         value = node.unit;
         value.scalar = this.ast{node.value}.value;
     end
