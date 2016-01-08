@@ -1,4 +1,4 @@
-A simple Quantity and Parser implementation for GNU Octave and MATLAB®.
+A simple Quantity and its Parser implementation for GNU Octave and MATLAB®.
 
 # Requirements
 GNU Octave version minimum 4.0 or MATLAB about version 2008 (verified for 2013b).
