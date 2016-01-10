@@ -10,7 +10,6 @@ methods (Access = public)
     end
     
     function value = qty(this, node)
-        keyboard
         value = node.unit;
         value.scalar = this.ast{node.value}.value;
     end

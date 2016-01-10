@@ -3,18 +3,26 @@ classdef QtyExprParser < FuncExprParser
 %Usage:
 %   p = QtyExprParser();
 %   [ast, parseError] = p.parse('2kg + 1kg');
-%   evalExpr(ast)                   -> 3 kilogram
+%   QtyEvaluator(ast).exec()    % 3 kilogram
 %
-%   ast = p.parse('2m / (t s)');
-%   scope = struct('t', 5);
-%   evalExpr(ast, scope)           -> 0.4 meter/second
+%   ast = p.parse('(2m) / delay s');
+%   etor = QtyEvaluator(ast);
+%   scope = struct('delay', 5);
+%   etor.exec(scope)            % 0.4 meter/second
+%
+% COPYRIGHT Wolfgang Kühn 2016 under the MIT License (MIT).
+% Origin is https://github.com/decatur/ansatz19.
 
     properties (SetAccess = public)
     end
     methods
 
         
-        function qty = parseUnits(this)
+        function node = parseUnits(this, node)
+            if ~(strcmp(this.token.type, 'identifier') || (strcmp(this.token.type, 'numerical') && this.token.value == '1'))
+                return
+            end
+
             qty = Qty(1);
             qty.numerator = {this.token.value};
             this.next();
@@ -23,7 +31,8 @@ classdef QtyExprParser < FuncExprParser
                 type = this.token.type;
                 this.next();
                 
-                if ~strcmp(this.token.type, 'unit')
+                if ~strcmp(this.token.type, 'identifier')
+                    this.previous();
                     break;
                 end
 
@@ -35,6 +44,8 @@ classdef QtyExprParser < FuncExprParser
 
                 this.next();
             end
+
+            node = struct('type', 'qty', 'value', this.astNode(node), 'unit', qty);
         end
 
         function node = numericalNode(this, value)
@@ -42,23 +53,15 @@ classdef QtyExprParser < FuncExprParser
             node = struct('type', 'numerical');
             node.value = str2double(value);
 
-            if strcmp(this.token.type, 'identifier')
-                qty = this.parseUnits();
-                node = struct('type', 'qty', 'value', this.astNode(node), 'unit', qty);
-            else
-                
-            end
+            node = this.parseUnits(node);
         end
 
         function node = identifierNode(this, value)
         % Overloads function in ExprParser class.
-            if strcmp(this.token.type, 'identifier')
-                qty = this.parseUnits();
-                node = struct('type', 'qty', 'value', value, 'unit', qty);
-            else
-                node = struct('type', 'identifier');
-                node.value = value;
-            end
+            node = struct('type', 'identifier');
+            node.value = value;
+
+            node = this.parseUnits(node);
         end
 
     end
