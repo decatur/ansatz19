@@ -1,3 +1,5 @@
+% COPYRIGHT Wolfgang Kuehn 2015-2016 under the MIT License (MIT).
+% Origin is https://github.com/decatur/ansatz19.
 
 addpath('../ansatz17', '../ansatz17/examples');
 clear classes; p = QtyExprParser();
@@ -21,7 +23,7 @@ assert(strcmp(ast{2}.unit.toString(), '1 1/m'));
 [ast, pe] = p.parse('2m/3');
 assert(length(ast), 4);
 assert(strcmp(ast{2}.type, 'qty'));
-assert(strcmp(ast{3}.type, 'divide'));
+assert(strcmp(ast{4}.type, 'divide'));
 
 [ast, pe] = p.parse('2kg + 1kg');
 qty = QtyEvaluator(ast).exec();

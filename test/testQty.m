@@ -1,3 +1,5 @@
+% COPYRIGHT Wolfgang Kuehn 2015-2016 under the MIT License (MIT).
+% Origin is https://github.com/decatur/ansatz19.
 
 q = Qty(1, 'Hz');
 q = q*Qty(3,'s');

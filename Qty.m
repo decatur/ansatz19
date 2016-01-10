@@ -12,8 +12,8 @@ classdef Qty
 %   mass.to('m')                -> error: Cannot onvert kg to m
 %   mass + height               -> Arguments 81 kg and 1.88 m are not compatible by unit
 %
-% COPYRIGHT Wolfgang Kuehn 2015 under the MIT License (MIT).
-% Origin is https://github.com/decatur/ansatz17.
+% COPYRIGHT Wolfgang Kuehn 2015-2016 under the MIT License (MIT).
+% Origin is https://github.com/decatur/ansatz19.
 
     properties (SetAccess = public)
         scalar
