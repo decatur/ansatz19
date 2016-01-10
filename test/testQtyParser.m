@@ -1,7 +1,6 @@
 
 addpath('../ansatz17', '../ansatz17/examples');
-clear classes;
-p = QtyExprParser();
+clear classes; p = QtyExprParser();
 
 [ast, pe] = p.parse('1m');
 assert(length(ast), 2);

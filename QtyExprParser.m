@@ -3,20 +3,18 @@ classdef QtyExprParser < FuncExprParser
 %Usage:
 %   p = QtyExprParser();
 %   [ast, parseError] = p.parse('2kg + 1kg');
-%   QtyEvaluator(ast).exec()    % 3 kilogram
+%   qty = QtyEvaluator(ast).exec()    % qty = 3 kilogram
 %
 %   ast = p.parse('(2m) / delay s');
 %   etor = QtyEvaluator(ast);
 %   scope = struct('delay', 5);
-%   etor.exec(scope)            % 0.4 meter/second
+%   qty = etor.exec(scope)            % qty = 0.4 meter/second
 %
-% COPYRIGHT Wolfgang Kühn 2016 under the MIT License (MIT).
+% COPYRIGHT Wolfgang Kühn 2015-2016 under the MIT License (MIT).
 % Origin is https://github.com/decatur/ansatz19.
 
-    properties (SetAccess = public)
-    end
-    methods
 
+    methods
         
         function node = parseUnits(this, node)
             if ~(strcmp(this.token.type, 'identifier') || (strcmp(this.token.type, 'numerical') && this.token.value == '1'))

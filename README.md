@@ -8,37 +8,38 @@ You must add these files from https://github.com/decatur/ansatz17:
 * Parser.m
 * examples/ExprParser.m
 * examples/FuncExprParser.m
-* examples/evalExpr.m
+* examples/ExprEvaluator.m
 
 # Quantity
 
 ## Usage
 ```
-mass = Qty(81, 'kg')        -> 81 kg
-mass.to('g')                -> 81000 g
+mass = Qty(81, 'kg')        % 81 kg
+mass.to('g')                % 81000 g
 
-height = Qty('1.88 m')      -> 1.88 m
-height.to('cm')             -> 188 cm
-bmi = mass/height^2         -> 22.9176 kilogram/meter/meter
+height = Qty('1.88 m')      % 1.88 m
+height.to('cm')             % 188 cm
+bmi = mass/height^2         % 22.9176 kilogram/meter/meter
 
-2/height                    -> 1.06383 1/m
-mass.to('m')                -> error: Cannot onvert kg to m
-mass + height               -> Arguments 81 kg and 1.88 m are not compatible by unit
+2/height                    % 1.06383 1/m
+mass.to('m')                % error: Cannot onvert kg to m
+mass + height               % Arguments 81 kg and 1.88 m are not compatible by unit
 ```
 
 # Quantity Parser
 
-The Quantity Parser extends FunExprParser, see ...
+The Quantity Parser extends FuncExprParser, see ...
 
 ## Usage
 ```
+addpath('../ansatz17', '../ansatz17/examples')
 p = QtyExprParser();
 [ast, parseError] = p.parse('2kg + 1kg');
-etor = Evaluator(ast);
-etor.exec()                 -> 3 kilogram
+etor = QtyEvaluator(ast);
+qty = etor.exec()                 % qty = 3 kilogram
 
-ast = p.parse('2m / (delay s)');
-etor = Evaluator(ast);
+[ast, parseError] = p.parse('(2m) / delay s');
+etor = QtyEvaluator(ast);
 scope = struct('delay', 5);
-etor.exec(scope)            -> 0.4 meter/second
+qty = etor.exec(scope)            % qty = 0.4 meter/second
 ```
