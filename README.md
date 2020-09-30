@@ -1,3 +1,5 @@
+⚠️ Deprecated. 
+
 A simple Quantity and its Parser implementation for GNU Octave and MATLAB®.
 
 # Requirements
